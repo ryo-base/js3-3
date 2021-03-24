@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js課題3-4</title>
+    <style>
+        button {
+            border-radius: 5px;
+            margin-right: 5px;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: rgb(143, 155, 224);
+        }
+      
+    </style>
+</head>
+
+<body>
+    <h1>ToDo リスト </h1>
+
+    <sevtion class="taskDispaly">
+        <div class="choice">
+            <label><input type="radio" name="choice" id="all" checked>すべて </label>
+            <label><input type="radio" name="choice" id="working">作業中</label>
+            <label><input type="radio" name="choice" id="done">完了</label>
+        </div>
+
+        <div>
+            　<table id="item">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>コメント</th>
+                        <th>状態</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="doList">
+
+                </tbody>
+
+        </div>
+
+        </table>
+        </div>
+    </sevtion>
+
+    <section class="add">
+        <h1>新規のタスクを追加</h1>
+        <input type="input" id="input" value=""> <button id="addBtn">追加</button>
+    </section>
+    <script src="js3-4.js"></script>
+</body>
+
+</html>
