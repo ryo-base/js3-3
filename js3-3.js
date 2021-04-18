@@ -7,18 +7,17 @@ const radioAllBtn = document.getElementById('all');
 const radioWorkingBtn = document.getElementById('working');
 const radioDoneBtn = document.getElementById('done');
 
-
 //テーブル要素取得
 const doList = document.getElementById('doList');
 
 //配列。後に追加される
 const lists = []; //({task:inputValue,status:'作業中'})
+
 //入力内容取得
 const input = document.getElementById('input');
-//id用
-let idIndex = 0;
+
 //ボタン生成
-const makeWorkBtn = (status, tr,tdId,testId) => {//状態　作業中
+const makeWorkBtn = (status,testId) => {//状態　作業中
     //const target = document.getElementById(id);
     const workBtn = document.createElement('button');
     const workContent = document.createTextNode(status);
@@ -30,8 +29,6 @@ const makeWorkBtn = (status, tr,tdId,testId) => {//状態　作業中
             return;
         }
         if (workBtn.innerHTML === '完了') {
-            console.log(tr.rowIndex);
-            console.log(tdId);
             lists[testId].status = '作業中'
             filterShow();
             return;
@@ -46,14 +43,13 @@ const makeDelBtn = (testId) => {//状態　消去
     const workContent = document.createTextNode('消去');
     deleteBtn.appendChild(workContent);
     deleteBtn.addEventListener('click', () => {
-
         lists.splice(testId, 1);    
-      
         doList.innerHTML = '';
-        for (var i = idIndex; i < lists.length; i++) {
-            lists[i].id = i
-          }
+        lists.forEach((todo,index) => {
+            todo.id = index;
+        })
         filterShow()
+
     });
     return deleteBtn;
 }
@@ -64,7 +60,6 @@ const toDoShow = (a) => {
 
     a.forEach((value, id) => {
         const tr = document.createElement('tr');
-        tr.setAttribute('id',id);
         const status = value.status;
         //<th>ID
         const tdId = document.createElement('td');
@@ -73,11 +68,10 @@ const toDoShow = (a) => {
         //<th>コメント
         const tdComment = document.createElement('td');
         tdComment.textContent = value.task;//コメント
-
         tr.appendChild(tdId);
         tr.appendChild(tdComment);
-        tr.appendChild(makeWorkBtn(status, tr,tdId,testId));
-        tr.appendChild(makeDelBtn(tr, tdId,testId));
+        tr.appendChild(makeWorkBtn(status,testId));
+        tr.appendChild(makeDelBtn(testId));  
         doList.appendChild(tr);
     });
 }
@@ -86,20 +80,22 @@ const toDoShow = (a) => {
 //実行
 addBtn.addEventListener('click', () => {
     const inputValue = input.value;
-    const list = ({  id: idIndex,task: inputValue, status: '作業中' });
+    const list = ({  task: inputValue, status: '作業中' });
     lists.push(list);
+    lists.forEach((todo,index) => {
+        todo.id = index;
+    })
     if (radioAllBtn.checked || radioWorkingBtn.checked) {
         toDoShow(lists);
     }
     input.value = ''//入力後、前の入力内容を消す
-    idIndex ++;
+
 });
 
 //作業中ボタン
 radioWorkingBtn.addEventListener('click', () => {
     if (radioWorkingBtn.checked) {
         filterShow();
-
     }
 })
 //完了ボタン
